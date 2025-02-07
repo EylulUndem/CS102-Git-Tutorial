@@ -15,7 +15,8 @@ public class Cipher
         // for all chars in the input string
         for (int i = 0; i < inputString.length(); i++)   
         {
-
+            char currentCharacter = inputString.charAt(i);
+            outputString += replaceChar(currentCharacter, true);
         }
 
         return outputString;
@@ -26,7 +27,10 @@ public class Cipher
         // output string will be collected in this variable, one char at a time
         String outputString = "";
         
-        replaceChar('a',true);
+        for (int k = 0; k < inputString.length(); k++){
+            char currentCharacter = inputString.charAt(k);
+            outputString += replaceChar(currentCharacter, false);
+        }
         
         return outputString;
     }
@@ -37,25 +41,24 @@ public class Cipher
     // works only when the input char is included in our alphabet variables
     // should not replace symbols or upper case letters, return input char in those cases
     private char replaceChar(char inputChar, boolean isEncrypt) {
-        
         if(isEncrypt) {
-            for (int i = 0; i < ORIGINAL_ALPHABET.length(); i++)   
-            {
-                if(ORIGINAL_ALPHABET.charAt(i) == inputChar) {
-
-                }
+            int characterIndex = ORIGINAL_ALPHABET.indexOf(inputChar);
+            if(characterIndex != -1){
+                return CIPHER_ALPHABET.charAt(characterIndex);
             }
-        }
-        else {
-            for (int i = 0; i < CIPHER_ALPHABET.length(); i++)   
-            {
-                if(CIPHER_ALPHABET.charAt(i) == inputChar) {
-                    return ORIGINAL_ALPHABET.charAt(i);
-                }
+            else{
+                return inputChar;
             }
         }
         
-        // if we did not find it in the alphabet, then return the original char
-        return inputChar;
+        else {
+            int characterIndex = CIPHER_ALPHABET.indexOf(inputChar);
+            if (characterIndex != -1){
+                return ORIGINAL_ALPHABET.charAt(characterIndex);
+            }
+            else {
+                return inputChar;
+            }  
+        }        
     }
 }   
